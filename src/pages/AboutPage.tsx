@@ -2,12 +2,12 @@ import PageHeader from "../components/common/PageHeader";
 import SectionTitle from "../components/common/SectionTitle";
 import ScrollReveal from "../components/common/ScrollReveal";
 import { motion } from "framer-motion";
+import CertificatesSection from "./CertificatesSection";
 import {
   companyIntro,
   companyHistory,
   companyCulture,
   companyStructure,
-  certificates,
   companyQualifications,
 } from "../data/company";
 import { COMPANY_INFO } from "../utils/constants";
@@ -299,35 +299,7 @@ export default function AboutPage() {
       </section>
 
       {/* ===== Certificates Gallery ===== */}
-      <section className="py-16 md:py-24 bg-surface-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle title="资质证书" subtitle="权威认证，信誉保证" />
-          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {certificates.map((cert, i) => (
-              <motion.div
-                key={cert.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
-                className="group"
-              >
-                <div className="aspect-[3/4] rounded-xl overflow-hidden bg-surface-card border border-navy-700 group-hover:border-cyan-500/30 transition-all group-hover:shadow-[0_0_30px_rgba(0,212,255,0.08)]">
-                  <img
-                    src={cert.image}
-                    alt={cert.name}
-                    className="w-full h-full object-contain p-2"
-                    loading="lazy"
-                  />
-                </div>
-                <p className="text-white text-xs sm:text-sm font-medium mt-2 text-center group-hover:text-cyan-400 transition-colors">
-                  {cert.name}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CertificatesSection />
     </main>
   );
 }
