@@ -7,9 +7,11 @@ import AmapBlock from "../components/map/AmapBlock";
 import SectionTitle from "../components/common/SectionTitle";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import CertificatesSection from "./CertificatesSection";
+import { certificates } from "../data/company";
 
 export default function HomePage() {
+  const featuredCerts = certificates;
+
   return (
     <main>
       {/* ===== Hero Carousel (full screen) ===== */}
@@ -28,16 +30,43 @@ export default function HomePage() {
       <WorkGallery />
 
       {/* ===== Certificates — full width ===== */}
-      <CertificatesSection title="资质荣誉" subtitle="专业认证，信誉保障">
-        <div className="text-center mt-8">
-          <Link
-            to="/about"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-cyan-500/30 text-cyan-400 text-sm hover:bg-cyan-500/10 transition-all"
-          >
-            查看全部资质 &rarr;
-          </Link>
+      <section className="py-20 md:py-28 bg-surface-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionTitle title="资质荣誉" subtitle="专业认证，信誉保障" />
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {featuredCerts.map((cert, i) => (
+              <motion.div
+                key={cert.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="group"
+              >
+                <div className="aspect-[3/4] rounded-xl overflow-hidden bg-surface-card border border-navy-700 group-hover:border-cyan-500/30 transition-all group-hover:shadow-[0_0_20px_rgba(0,212,255,0.08)]">
+                  <img
+                    src={cert.image}
+                    alt={cert.name}
+                    className="w-full h-full object-contain p-3"
+                    loading="lazy"
+                  />
+                </div>
+                <p className="text-white text-xs sm:text-sm font-medium mt-2 text-center group-hover:text-cyan-400 transition-colors">
+                  {cert.name}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-cyan-500/30 text-cyan-400 text-sm hover:bg-cyan-500/10 transition-all"
+            >
+              查看全部资质 &rarr;
+            </Link>
+          </div>
         </div>
-      </CertificatesSection>
+      </section>
 
       {/* ===== Map ===== */}
       <section className="py-20 md:py-28 bg-navy-950">
