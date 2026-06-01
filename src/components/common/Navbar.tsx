@@ -49,7 +49,7 @@ export default function Navbar() {
             {/* Logo + Brand */}
             <Link to="/" className="flex items-center gap-3 md:gap-5 group flex-shrink-0">
               <img
-                src="/images/logo-transparent.png"
+                src={`${import.meta.env.BASE_URL}images/logo-transparent.png`}
                 alt={COMPANY_INFO.shortName}
                 className="w-9 h-9 sm:w-[58px] sm:h-[58px] object-contain animate-[logoGlow_3s_ease-in-out_infinite]"
               />

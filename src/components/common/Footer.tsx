@@ -16,7 +16,7 @@ export default function Footer() {
           {/* Left: Logo + name */}
           <Link to="/" className="flex items-center gap-2.5 flex-shrink-0">
             <img
-              src="/images/logo-transparent.png"
+              src={`${import.meta.env.BASE_URL}images/logo-transparent.png`}
               alt={COMPANY_INFO.shortName}
               className="w-9 h-9 sm:w-10 sm:h-10 object-contain brightness-115"
             />

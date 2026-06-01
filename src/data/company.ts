@@ -77,20 +77,20 @@ export const companyStructure = {
 };
 
 export const certificates = [
-  { name: "甲级测绘资质证书", image: "/images/甲级资质证书.jpg" },
-  { name: "乙级测绘资质证书", image: "/images/乙级资质证书.jpg" },
-  { name: "国家高新技术企业", image: "/images/certificates/high-tech-cert.png" },
-  { name: "营业执照", image: "/images/营业执照.png" },
-  { name: "全国优秀测绘工程奖", image: "/images/certificates/national-excellence-award.png" },
-  { name: "ISO 四大管理体系认证", image: "/images/certificates/three-system-cert.png" },
-  { name: "信息安全管理体系认证", image: "/images/certificates/information-security-cert.png" },
-  { name: "企业信用等级 AAA 级", image: "/images/certificates/credit-rating-cert.png" },
-  { name: "广东省守合同重信用企业", image: "/images/certificates/contract-honoring-cert.png" },
-  { name: "诚信供应商 AAA 级", image: "/images/certificates/integrity-supplier-cert.png" },
-  { name: "诚信经营示范单位", image: "/images/certificates/integrity-operation-cert.png" },
-  { name: "质量服务诚信企业", image: "/images/certificates/quality-service-cert.png" },
-  { name: "软件著作权", image: "/images/certificates/software-copyright.png" },
-  { name: "通用航空企业经营许可证", image: "/images/certificates/aviation-license-new.png" },
+  { name: "甲级测绘资质证书", image: `${import.meta.env.BASE_URL}images/甲级资质证书.jpg` },
+  { name: "乙级测绘资质证书", image: `${import.meta.env.BASE_URL}images/乙级资质证书.jpg` },
+  { name: "国家高新技术企业", image: `${import.meta.env.BASE_URL}images/certificates/high-tech-cert.png` },
+  { name: "营业执照", image: `${import.meta.env.BASE_URL}images/营业执照.png` },
+  { name: "全国优秀测绘工程奖", image: `${import.meta.env.BASE_URL}images/certificates/national-excellence-award.png` },
+  { name: "ISO 四大管理体系认证", image: `${import.meta.env.BASE_URL}images/certificates/three-system-cert.png` },
+  { name: "信息安全管理体系认证", image: `${import.meta.env.BASE_URL}images/certificates/information-security-cert.png` },
+  { name: "企业信用等级 AAA 级", image: `${import.meta.env.BASE_URL}images/certificates/credit-rating-cert.png` },
+  { name: "广东省守合同重信用企业", image: `${import.meta.env.BASE_URL}images/certificates/contract-honoring-cert.png` },
+  { name: "诚信供应商 AAA 级", image: `${import.meta.env.BASE_URL}images/certificates/integrity-supplier-cert.png` },
+  { name: "诚信经营示范单位", image: `${import.meta.env.BASE_URL}images/certificates/integrity-operation-cert.png` },
+  { name: "质量服务诚信企业", image: `${import.meta.env.BASE_URL}images/certificates/quality-service-cert.png` },
+  { name: "软件著作权", image: `${import.meta.env.BASE_URL}images/certificates/software-copyright.png` },
+  { name: "通用航空企业经营许可证", image: `${import.meta.env.BASE_URL}images/certificates/aviation-license-new.png` },
 ];
 
 export const companyQualifications = [

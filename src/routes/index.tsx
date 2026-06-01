@@ -6,16 +6,21 @@ import ServicesPage from "../pages/ServicesPage";
 import ProjectsPage from "../pages/ProjectsPage";
 import Contact from "../pages/Contact";
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        { index: true, element: <HomePage /> },
+        { path: "about", element: <AboutPage /> },
+        { path: "services", element: <ServicesPage /> },
+        { path: "projects", element: <ProjectsPage /> },
+        { path: "contact", element: <Contact /> },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: "about", element: <AboutPage /> },
-      { path: "services", element: <ServicesPage /> },
-      { path: "projects", element: <ProjectsPage /> },
-      { path: "contact", element: <Contact /> },
-    ],
+    basename: "/tiancheng-survey",
   },
-]);
+);

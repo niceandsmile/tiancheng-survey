@@ -2,12 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
+const B = import.meta.env.BASE_URL;
 const slides = [
-  { image: "/images/carousel/carousel-1.jpg", title: "精准测绘", subtitle: "勘测无限天地，成就锦绣蓝图" },
-  { image: "/images/carousel/carousel-2.jpg", title: "甲级资质", subtitle: "国家高新技术企业 · ISO 四大体系认证" },
-  { image: "/images/carousel/carousel-3.jpg", title: "专业团队", subtitle: "63 名员工 · 51 名技术骨干 · 深耕行业十年" },
-  { image: "/images/carousel/carousel-4.jpg", title: "服务大湾区", subtitle: "深圳 · 广州 · 惠东 · 白云 · 福州 · 南山 — 覆盖全国"},
-  { image: "/images/carousel/carousel-5.jpg", title: "精准求实", subtitle: "勘测无限天地，成就锦绣蓝图" },
+  { image: `${B}images/carousel/carousel-1.jpg`, title: "精准测绘", subtitle: "勘测无限天地，成就锦绣蓝图" },
+  { image: `${B}images/carousel/carousel-2.jpg`, title: "甲级资质", subtitle: "国家高新技术企业 · ISO 四大体系认证" },
+  { image: `${B}images/carousel/carousel-3.jpg`, title: "专业团队", subtitle: "63 名员工 · 51 名技术骨干 · 深耕行业十年" },
+  { image: `${B}images/carousel/carousel-4.jpg`, title: "服务大湾区", subtitle: "深圳 · 广州 · 惠东 · 白云 · 福州 · 南山 — 覆盖全国"},
+  { image: `${B}images/carousel/carousel-5.jpg`, title: "精准求实", subtitle: "勘测无限天地，成就锦绣蓝图" },
 ];
 
 export default function HeroCarousel() {
