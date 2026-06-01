@@ -8,6 +8,7 @@ import SectionTitle from "../components/common/SectionTitle";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { certificates } from "../data/company";
+import LazyImage from "../components/common/LazyImage";
 
 export default function HomePage() {
   const featuredCerts = certificates;
@@ -44,11 +45,10 @@ export default function HomePage() {
                 className="group"
               >
                 <div className="aspect-[3/4] rounded-xl overflow-hidden bg-surface-card border border-navy-700 group-hover:border-cyan-500/30 transition-all group-hover:shadow-[0_0_20px_rgba(0,212,255,0.08)]">
-                  <img
+                  <LazyImage
                     src={cert.image}
                     alt={cert.name}
                     className="w-full h-full object-contain p-3"
-                    loading="lazy"
                   />
                 </div>
                 <p className="text-white text-xs sm:text-sm font-medium mt-2 text-center group-hover:text-cyan-400 transition-colors">
