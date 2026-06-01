@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment (contains API keys)
+.env
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+.idea/
+
+# Large images (upload separately)
+public/images/work/
+public/images/brochure/
+public/images/image_lun/
+public/images/iamge3/
+public/images/certificates/
+public/images/carousel/
+public/images/projects/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
