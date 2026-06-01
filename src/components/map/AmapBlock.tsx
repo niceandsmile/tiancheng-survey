@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 
 const AMAP_KEY = import.meta.env.VITE_AMAP_KEY || "";
+const AMAP_SECRET = import.meta.env.VITE_AMAP_SECURITY_CODE || "";
 const COMPANY_NAME = "深圳市天成测绘技术有限公司";
 const COMPANY_ADDRESS = "深圳市龙岗区龙城街道盛平社区龙城大道177号荔园大楼4F";
 
-if (!(window as any)._AMapSecurityConfig) {
-  (window as any)._AMapSecurityConfig = {
-    securityJsCode: import.meta.env.VITE_AMAP_SECURITY_CODE || "",
-  };
-}
+// Set security config BEFORE SDK loads (must be global + early)
+(window as any)._AMapSecurityConfig = {
+  securityJsCode: AMAP_SECRET,
+};
 
 interface Props { height?: string; className?: string; }
 
@@ -63,7 +63,7 @@ export default function AmapBlock({ height, className = "" }: Props) {
       }
       const s = document.createElement("script");
       s.setAttribute("data-amap", "1");
-      s.src = `https://webapi.amap.com/maps?v=2.0&key=${AMAP_KEY}&plugin=AMap.Scale,AMap.ToolBar`;
+      s.src = `https://webapi.amap.com/maps?v=2.0&key=${AMAP_KEY}&jscode=${AMAP_SECRET}&plugin=AMap.Scale,AMap.ToolBar`;
       s.onload = () => init();
       s.onerror = () => { if (!dead) { setErrMsg("SDK 加载失败"); setStatus("fail"); } };
       document.head.appendChild(s);
