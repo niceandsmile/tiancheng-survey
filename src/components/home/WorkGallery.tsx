@@ -3,9 +3,15 @@ import SectionTitle from "../common/SectionTitle";
 
 // Auto-detect all images — just drop files in /public/images/work/ and rebuild
 const workImages = import.meta.glob("/public/images/work/*.{jpg,jpeg,png,JPG,PNG}", { eager: true, query: "?url", import: "default" });
-const photos = Object.values(workImages).map((url) => ({
+const allPhotos = Object.values(workImages).map((url) => ({
   src: url as string,
 }));
+
+// Shuffle and pick N to reduce simultaneous requests
+function pick<T>(arr: T[], n: number): T[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
 
 export default function WorkGallery() {
   const row1Ref = useRef<HTMLDivElement>(null);
@@ -16,17 +22,34 @@ export default function WorkGallery() {
   const offset1Ref = useRef(0);
   const offset2Ref = useRef(0);
 
+  // Pick 18 random photos (reduces load from 140 to 18 base images)
+  const [photos] = useState(() => pick(allPhotos, 18));
+  const [batches, setBatches] = useState(0); // progressive reveal
+
   // IntersectionObserver — delay rendering until gallery nears viewport
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { rootMargin: "400px" }, // start loading 400px before scrolling into view
+      { rootMargin: "600px" },
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  // Progressive reveal — load images in batches of 4 every 150ms
+  useEffect(() => {
+    if (!visible) return;
+    if (batches >= photos.length) return;
+    const t = setInterval(() => {
+      setBatches((p) => {
+        const next = p + 4;
+        return Math.min(next, photos.length);
+      });
+    }, 150);
+    return () => clearInterval(t);
+  }, [visible, batches, photos.length]);
 
   // Scrolling animation
   useEffect(() => {
@@ -60,9 +83,10 @@ export default function WorkGallery() {
     </div>
   );
 
-  // After visible, we still need the duplicated set for infinite scroll
-  const row1 = visible ? [...photos, ...photos] : Array.from({ length: 10 }, (_, i) => ({ src: "", _placeholder: true }));
-  const row2 = visible ? [...photos].reverse().concat([...photos].reverse()) : Array.from({ length: 10 }, (_, i) => ({ src: "", _placeholder: true }));
+  // Progressive: only show images up to the current batch
+  const revealed = visible ? photos.slice(0, batches) : [];
+  const row1 = visible ? [...revealed, ...revealed] : Array.from({ length: 6 }, () => ({ src: "", _placeholder: true }));
+  const row2 = visible ? [...revealed].reverse().concat([...revealed].reverse()) : Array.from({ length: 6 }, () => ({ src: "", _placeholder: true }));
 
   return (
     <section ref={sectionRef} className="relative py-20 md:py-28 bg-navy-950 overflow-hidden"
