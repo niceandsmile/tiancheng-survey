@@ -3,8 +3,8 @@ import SectionTitle from "../common/SectionTitle";
 
 // Auto-detect all images — just drop files in /public/images/work/ and rebuild
 const workImages = import.meta.glob("/public/images/work/*.{jpg,jpeg,png,JPG,PNG}", { eager: true, query: "?url", import: "default" });
-const photos = Object.keys(workImages).map((path) => ({
-  src: path.replace(/^\/public/, ""),
+const photos = Object.values(workImages).map((url) => ({
+  src: url as string,
 }));
 
 export default function WorkGallery() {
