@@ -9,7 +9,7 @@ interface Props {
   children?: ReactNode;
 }
 
-export default function CertificatesSection({ title = "资质证书", subtitle = "权威认证，信誉保证" }: Props) {
+export default function CertificatesSection({ title = "资质证书", subtitle = "权威认证，信誉保证", children }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [count, setCount] = useState(0);
