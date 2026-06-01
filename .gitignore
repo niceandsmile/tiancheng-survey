@@ -12,14 +12,7 @@ dist/
 !.vscode/settings.json
 .idea/
 
-# Large images (upload separately)
-public/images/work/
-public/images/brochure/
-public/images/image_lun/
-public/images/iamge3/
-public/images/certificates/
-public/images/carousel/
-public/images/projects/
+# Images now compressed — included in repo
 
 # OS
 .DS_Store
