@@ -60,7 +60,7 @@ export default function ContactForm() {
     // Simulate API call
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log("Form submitted:", formData);
+      // TODO: replace with real API call after backend is deployed
       setStatus("success");
       setFormData(initialForm);
     } catch {

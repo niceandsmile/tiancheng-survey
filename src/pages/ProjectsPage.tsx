@@ -9,7 +9,6 @@ import {
   HiXMark,
   HiOutlineCalendarDays,
   HiOutlineBuildingOffice2,
-  HiOutlineMapPin,
 } from "react-icons/hi2";
 
 export default function ProjectsPage() {

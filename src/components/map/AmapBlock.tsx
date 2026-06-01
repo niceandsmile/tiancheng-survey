@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useMemo } from "react";
+import { COMPANY_COORDS, MAP_ZOOM } from "../../utils/constants";
 
 const AMAP_KEY = import.meta.env.VITE_AMAP_KEY || "";
 const AMAP_SECRET = import.meta.env.VITE_AMAP_SECURITY_CODE || "";
@@ -29,10 +30,10 @@ export default function AmapBlock({ height, className = "" }: Props) {
       if (!el) { n++; if (n < 10) setTimeout(init, 100); else { setErrMsg("容器未找到"); setStatus("fail"); } return; }
       try {
         const A = (window as any).AMap;
-        map = new A.Map(uid, { zoom: 17, center: [114.251376, 22.732775], resizeEnable: true });
+        map = new A.Map(uid, { zoom: MAP_ZOOM, center: COMPANY_COORDS, resizeEnable: true });
         map.addControl(new A.Scale());
 
-        const pos: [number, number] = [114.251376, 22.732775];
+        const pos = COMPANY_COORDS;
         const navUrl = `https://uri.amap.com/navigation?to=${pos[0]},${pos[1]},${encodeURIComponent(COMPANY_NAME)}&mode=car&callnative=1`;
         const html = `<div style="padding:10px 16px;font-size:14px;color:#0f172a;line-height:1.6;min-width:200px"><strong>${COMPANY_NAME}</strong><br/><span style="font-size:12px;color:#64748b">${COMPANY_ADDRESS}</span><br/><a href="${navUrl}" target="_blank" style="display:inline-block;margin-top:8px;padding:5px 16px;background:#1677ff;color:#fff;border-radius:6px;text-decoration:none;font-size:13px">🧭 导航去这里</a></div>`;
 
@@ -101,7 +102,6 @@ export default function AmapBlock({ height, className = "" }: Props) {
           </div>
         </div>
       )}
-      <div id={uid} className="w-full h-full" />
     </div>
   );
 }

@@ -11,8 +11,6 @@ import { certificates } from "../data/company";
 import LazyImage from "../components/common/LazyImage";
 
 export default function HomePage() {
-  const featuredCerts = certificates;
-
   return (
     <main>
       {/* ===== Hero Carousel (full screen) ===== */}
@@ -35,7 +33,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle title="资质荣誉" subtitle="专业认证，信誉保障" />
           <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {featuredCerts.map((cert, i) => (
+            {certificates.map((cert, i) => (
               <motion.div
                 key={cert.name}
                 initial={{ opacity: 0, y: 20 }}

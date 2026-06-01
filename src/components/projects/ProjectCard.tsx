@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import type { Project } from "../../types";
 import {
-  HiOutlineMapPin,
   HiOutlineCalendarDays,
   HiOutlineBuildingOffice2,
 } from "react-icons/hi2";

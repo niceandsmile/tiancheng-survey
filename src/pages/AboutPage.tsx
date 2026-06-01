@@ -11,7 +11,6 @@ import {
   certificates,
   companyQualifications,
 } from "../data/company";
-import { COMPANY_INFO } from "../utils/constants";
 import {
   HiOutlineLightBulb,
   HiOutlineStar,
