@@ -42,7 +42,9 @@ export default function HeroCarousel() {
           <img
             src={slides[current].image}
             alt={slides[current].title}
-            loading="lazy"
+            fetchPriority={current === 0 ? "high" : undefined}
+            loading={current === 0 ? "eager" : "lazy"}
+            decoding="async"
             className="w-full h-full object-cover object-center"
             style={{ transform: "scale(1)", maxWidth: "100%", maxHeight: "100%" }}
           />

@@ -35,7 +35,7 @@ export default function WorkGallery() {
   const Card = ({ src }: { src: string }) => (
     <div className="flex-shrink-0 w-[200px] sm:w-[240px] lg:w-[280px] group">
       <div className="aspect-[4/3] rounded-xl overflow-hidden bg-surface-card border border-navy-700 group-hover:border-cyan-500/30 transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(0,212,255,0.1)]">
-        <img src={src} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+        <img src={src} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" fetchPriority="low" />
       </div>
     </div>
   );
