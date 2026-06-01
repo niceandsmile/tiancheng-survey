@@ -27,6 +27,8 @@ jobs:
       - run: npm run build
         env:
           VITE_BASE: /tiancheng-survey/
+          VITE_AMAP_KEY: 2ab3a53081a98f9ab2405c58099a2ebc
+          VITE_AMAP_SECURITY_CODE: 74ca031c77715abc04a4b11a35d6813e
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
