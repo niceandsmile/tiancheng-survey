@@ -6,6 +6,8 @@ import ServicesPage from "../pages/ServicesPage";
 import ProjectsPage from "../pages/ProjectsPage";
 import Contact from "../pages/Contact";
 
+const basename = import.meta.env.VITE_BASE?.replace(/\/$/, "") || undefined;
+
 export const router = createBrowserRouter(
   [
     {
@@ -20,7 +22,5 @@ export const router = createBrowserRouter(
       ],
     },
   ],
-  {
-    basename: "/tiancheng-survey",
-  },
+  basename ? { basename } : undefined,
 );
