@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import SectionTitle from "../components/common/SectionTitle";
 import { certificates } from "../data/company";
@@ -6,7 +6,7 @@ import { certificates } from "../data/company";
 interface Props {
   title?: string;
   subtitle?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export default function CertificatesSection({ title = "资质证书", subtitle = "权威认证，信誉保证" }: Props) {
