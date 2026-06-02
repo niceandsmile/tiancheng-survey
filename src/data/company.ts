@@ -93,6 +93,26 @@ export const certificates = [
   { name: "通用航空企业经营许可证", image: `${import.meta.env.BASE_URL}images/certificates/aviation-license-new.png` },
 ];
 
+export const patents = [
+  { name: "一种三维影像测量装置", image: `${import.meta.env.BASE_URL}images/certificates/patents/patent-01.jpg` },
+  { name: "一种外边长测量自动寻标装置", image: `${import.meta.env.BASE_URL}images/certificates/patents/patent-02.jpg` },
+  { name: "一种标杆快速保持竖直装置", image: `${import.meta.env.BASE_URL}images/certificates/patents/patent-03.jpg` },
+  { name: "测绘地理信息地图数据采集方法及系统", image: `${import.meta.env.BASE_URL}images/certificates/patents/patent-04.jpg` },
+  { name: "房产数据智能测量方法及系统", image: `${import.meta.env.BASE_URL}images/certificates/patents/patent-05.jpg` },
+  { name: "一种摄影无人机移动控制台", image: `${import.meta.env.BASE_URL}images/certificates/patents/patent-06.jpg` },
+];
+
+export const commendations = [
+  { name: "客户表扬信（一）", image: `${import.meta.env.BASE_URL}images/certificates/letters/letter-01.jpg` },
+  { name: "客户表扬信（二）", image: `${import.meta.env.BASE_URL}images/certificates/letters/letter-02.jpg` },
+  { name: "客户表扬信（三）", image: `${import.meta.env.BASE_URL}images/certificates/letters/letter-03.jpg` },
+  { name: "客户表扬信（四）", image: `${import.meta.env.BASE_URL}images/certificates/letters/letter-04.jpg` },
+  { name: "客户表扬信（五）", image: `${import.meta.env.BASE_URL}images/certificates/letters/letter-05.jpg` },
+  { name: "客户表扬信（六）", image: `${import.meta.env.BASE_URL}images/certificates/letters/letter-06.jpg` },
+  { name: "客户表扬信（七）", image: `${import.meta.env.BASE_URL}images/certificates/letters/letter-07.jpg` },
+  { name: "客户表扬信（八）", image: `${import.meta.env.BASE_URL}images/certificates/letters/letter-08.jpg` },
+];
+
 export const companyQualifications = [
   {
     category: "测绘资质",
