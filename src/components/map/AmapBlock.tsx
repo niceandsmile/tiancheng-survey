@@ -1,107 +1,71 @@
-import { useEffect, useRef, useState, useMemo } from "react";
-import { COMPANY_COORDS, MAP_ZOOM } from "../../utils/constants";
+import { useMemo } from "react";
+import { COMPANY_COORDS, COMPANY_INFO, MAP_ZOOM } from "../../utils/constants";
 
-const AMAP_KEY = import.meta.env.VITE_AMAP_KEY || "";
-const AMAP_SECRET = import.meta.env.VITE_AMAP_SECURITY_CODE || "";
-const COMPANY_NAME = "深圳市天成测绘技术有限公司";
-const COMPANY_ADDRESS = "深圳市龙岗区龙城街道盛平社区龙城大道177号荔园大楼4F";
+interface Props {
+  height?: string;
+  className?: string;
+}
 
-// Set security config BEFORE SDK loads (must be global + early)
-(window as any)._AMapSecurityConfig = {
-  securityJsCode: AMAP_SECRET,
-};
-
-interface Props { height?: string; className?: string; }
-
+/**
+ * 地图区块 — 使用 Leaflet + OSM 瓦片，完全免费，无需 API Key
+ * 通过 iframe srcDoc 嵌入，零外部依赖
+ */
 export default function AmapBlock({ height, className = "" }: Props) {
-  // Unique container ID per mount — prevents SPA re-attach conflict
-  const uid = useMemo(() => "amap-" + Math.random().toString(36).slice(2, 10), []);
-  const [status, setStatus] = useState<"loading" | "done" | "fail">("loading");
-  const [errMsg, setErrMsg] = useState("");
+  const [lng, lat] = COMPANY_COORDS;
+  const { name, address, phone } = COMPANY_INFO;
 
-  useEffect(() => {
-    let dead = false;
-    let map: any = null;
-    let n = 0;
-
-    const init = () => {
-      if (dead) return;
-      const el = document.getElementById(uid);
-      if (!el) { n++; if (n < 10) setTimeout(init, 100); else { setErrMsg("容器未找到"); setStatus("fail"); } return; }
-      try {
-        const A = (window as any).AMap;
-        map = new A.Map(uid, { zoom: MAP_ZOOM, center: COMPANY_COORDS, resizeEnable: true });
-        map.addControl(new A.Scale());
-
-        const pos = COMPANY_COORDS;
-        const navUrl = `https://uri.amap.com/navigation?to=${pos[0]},${pos[1]},${encodeURIComponent(COMPANY_NAME)}&mode=car&callnative=1`;
-        const html = `<div style="padding:10px 16px;font-size:14px;color:#0f172a;line-height:1.6;min-width:200px"><strong>${COMPANY_NAME}</strong><br/><span style="font-size:12px;color:#64748b">${COMPANY_ADDRESS}</span><br/><a href="${navUrl}" target="_blank" style="display:inline-block;margin-top:8px;padding:5px 16px;background:#1677ff;color:#fff;border-radius:6px;text-decoration:none;font-size:13px">🧭 导航去这里</a></div>`;
-
-        const mk = new A.Marker({ position: pos, title: COMPANY_NAME });
-        mk.setMap(map);
-        new A.InfoWindow({ content: html, offset: [0, -35] }).open(map, pos);
-        mk.on("click", () => new A.InfoWindow({ content: html, offset: [0, -35] }).open(map, pos));
-
-        const btn = document.createElement("div");
-        btn.innerHTML = `<div style="display:flex;align-items:center;gap:4px;padding:8px 14px;background:#1677ff;color:#fff;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.15);white-space:nowrap;font-family:system-ui,sans-serif">🧭 导航去这里</div>`;
-        btn.style.cssText = "position:absolute;bottom:20px;right:20px;z-index:100";
-        btn.onclick = () => window.open(navUrl, "_blank");
-        el.appendChild(btn);
-
-        setStatus("done");
-      } catch (e: any) {
-        setErrMsg(e.message || String(e));
-        setStatus("fail");
-      }
-    };
-
-    const loadSdk = () => {
-      if ((window as any).AMap?.Map) { init(); return; }
-      if (document.querySelector("script[data-amap]")) {
-        let tries = 0;
-        const t = setInterval(() => { if ((window as any).AMap?.Map) { clearInterval(t); init(); } if (++tries > 50) { clearInterval(t); setErrMsg("SDK 加载超时"); setStatus("fail"); } }, 200);
-        return () => { clearInterval(t); };
-      }
-      const s = document.createElement("script");
-      s.setAttribute("data-amap", "1");
-      s.src = `https://webapi.amap.com/maps?v=2.0&key=${AMAP_KEY}&jscode=${AMAP_SECRET}&plugin=AMap.Scale,AMap.ToolBar`;
-      s.onload = () => init();
-      s.onerror = () => { if (!dead) { setErrMsg("SDK 加载失败"); setStatus("fail"); } };
-      document.head.appendChild(s);
-    };
-
-    loadSdk();
-    return () => { dead = true; if (map) try { map.destroy(); } catch (_) {} };
-  }, [uid]);
+  // 生成一张完整的地图 HTML 页面，内嵌到 iframe
+  const mapHtml = useMemo(() => {
+    return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A1628}
+#map{width:100vw;height:100vh}
+/* Leaflet 暗色主题适配 */
+.leaflet-control-zoom a{background:#132744 !important;color:#94A3B8 !important;border-color:#1E3A5F !important}
+.leaflet-control-attribution{background:rgba(10,22,40,0.85) !important;color:#64748B !important;font-size:10px !important}
+.leaflet-control-attribution a{color:#00D4FF !important}
+.leaflet-popup-content-wrapper{background:#132744 !important;color:#E2E8F0 !important;border-radius:12px !important;box-shadow:0 4px 24px rgba(0,0,0,0.4) !important}
+.leaflet-popup-tip{background:#132744 !important}
+.leaflet-popup-content{padding:10px 16px !important;font-size:14px !important;line-height:1.6 !important;min-width:200px !important}
+.leaflet-popup-content strong{color:#fff;font-size:15px}
+.leaflet-popup-content .addr{font-size:12px;color:#94A3B8;margin-top:2px}
+.leaflet-popup-content .nav-btn{display:inline-block;margin-top:8px;padding:6px 16px;background:#1677ff;color:#fff;border-radius:6px;text-decoration:none;font-size:13px;font-weight:500}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>
+<script>
+var map=L.map('map',{zoomControl:true,attributionControl:true}).setView([${lat},${lng}],${MAP_ZOOM});
+// 高德公开瓦片 — 国内 CDN，免费免 Key
+L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{subdomains:'1234',maxZoom:18,attribution:'&copy; 高德地图'}).addTo(map);
+var marker=L.marker([${lat},${lng}]).addTo(map);
+var popupContent='<strong>${name}</strong><br/><span class="addr">${address}</span><br/><span class="addr">📞 ${phone}</span><br/><a class="nav-btn" href="https://uri.amap.com/navigation?to=${lng},${lat},${encodeURIComponent(name)}&mode=car&callnative=1" target="_blank">🧭 导航去这里</a>';
+marker.bindPopup(popupContent).openPopup();
+<\/script>
+</body>
+</html>`;
+  }, [lng, lat]);
 
   return (
     <div
       className={`relative rounded-2xl overflow-hidden border border-navy-700 ${className}`}
       style={height ? { height } : undefined}
     >
-      <div id={uid} className="w-full h-full" />
-      {status === "loading" && (
-        <div className="absolute inset-0 flex items-center justify-center bg-navy-900 z-10">
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
-            <span className="text-slate-400 text-sm">地图加载中…</span>
-          </div>
-        </div>
-      )}
-      {status === "fail" && (
-        <div className="absolute inset-0 flex items-center justify-center bg-navy-900 z-10 px-6">
-          <div className="text-center">
-            <div className="text-4xl mb-4">🗺️</div>
-            <p className="text-slate-300 text-base font-medium mb-1">地图暂不可用</p>
-            <p className="text-slate-500 text-xs mb-4">{errMsg}</p>
-            <div className="inline-block text-left p-4 rounded-xl bg-navy-800 border border-navy-700">
-              <p className="text-white font-semibold text-sm mb-2">{COMPANY_NAME}</p>
-              <p className="text-slate-400 text-xs leading-relaxed">{COMPANY_ADDRESS}</p>
-              <p className="text-cyan-400 text-xs mt-2">📞 0755-84574977</p>
-            </div>
-          </div>
-        </div>
-      )}
+      <iframe
+        srcDoc={mapHtml}
+        title={`${name} — 地图`}
+        className="w-full h-full"
+        style={{ border: "none" }}
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+        loading="lazy"
+      />
     </div>
   );
 }
