@@ -20,7 +20,7 @@ const TABS = [
 export default function HomePage() {
   const [tab, setTab] = useState<string>("certs");
 
-  const currentItems = tab === "certs" ? certificates : tab === "patents" ? patents : commendations;
+  const currentItems = tab === "certs" ? certificates.slice(0, 8) : tab === "patents" ? patents : commendations;
 
   return (
     <main>
@@ -99,7 +99,7 @@ export default function HomePage() {
 
           <div className="text-center mt-8">
             <Link
-              to="/about"
+              to="/about#certificates"
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-cyan-500/30 text-cyan-400 text-sm hover:bg-cyan-500/10 transition-all"
             >
               查看全部资质 &rarr;

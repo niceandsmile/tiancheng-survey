@@ -57,12 +57,18 @@ export default function ContactForm() {
 
     setStatus("submitting");
 
-    // Simulate API call
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      // TODO: replace with real API call after backend is deployed
-      setStatus("success");
-      setFormData(initialForm);
+      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setFormData(initialForm);
+      } else {
+        throw new Error("formspree error");
+      }
     } catch {
       setStatus("error");
       setTimeout(() => setStatus("idle"), 3000);

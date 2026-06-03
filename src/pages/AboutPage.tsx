@@ -286,7 +286,7 @@ export default function AboutPage() {
                       className="p-3 sm:p-4 rounded-xl bg-surface-card border border-navy-700 text-center text-white text-xs sm:text-sm"
                     >
                       {item.name}
-                      {item.desc && (
+                      {'desc' in item && item.desc && (
                         <div className="text-text-muted text-xs mt-1">{item.desc}</div>
                       )}
                     </div>
@@ -299,7 +299,7 @@ export default function AboutPage() {
       </section>
 
       {/* ===== Certificates Gallery ===== */}
-      <section className="py-16 md:py-24 bg-surface-dark">
+      <section id="certificates" className="py-16 md:py-24 bg-surface-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle title="资质证书" subtitle="权威认证，信誉保证" />
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
